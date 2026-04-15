@@ -1,0 +1,23 @@
+[
+    {
+        "title": "Budget Tracker",
+        "desc": "",
+        "link": "budget-tracker"
+    },
+    {
+        "title": "Live Stock Exchange",
+        "desc": "",
+        "link": "stock-chart"
+    },
+    {
+        "title": "Financial Education",
+        "desc": "",
+        "link": "tutorial"
+    },
+    {
+        "title": "Currency Converter",
+        "desc": "",
+        "link": "currency-converter"
+    }
+
+]
