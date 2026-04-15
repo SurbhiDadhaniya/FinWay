@@ -45,8 +45,12 @@ router.post("/", async (req, res, next) => {
 			const response = await fetch(apiUrl);
 			resJson = await response.json();
 			if (resJson["Meta Data"] === undefined) {
-				console.warn("Live API returned no data, falling back to mock:", resJson);
-				resJson = pData;
+    			console.warn("Live API returned no data, falling back to mock:", resJson);
+    			if (!pData[series]) {
+        			return res.status(503).json({ error: "No data available for this stock yet." });
+    			}
+    			resJson = pData;
+			}
 }
 			else {
 				pData[series] = resJson[series];
