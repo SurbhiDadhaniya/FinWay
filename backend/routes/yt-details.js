@@ -1,4 +1,3 @@
-const yts = require("yt-search");
 const express = require("express");
 const router = express.Router();
 
@@ -6,14 +5,16 @@ router.post("/", async (req, res, next) => {
     const { link } = req.body;
     try {
         const videoId = new URL(link).searchParams.get("v");
-        const result = await yts({ videoId });
-
-        res.status(200).json({
-            channelName: result.author.name,
-            videoTitle: result.title,
-            videoDesc: result.description || "No Description",
-            videoLink: result.url,
-            videoThumb: result.thumbnail,
+        const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${process.env.YOUTUBE_API_KEY}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        const video = data.items[0].snippet;
+        res.send({
+            channelName: video.channelTitle,
+            videoTitle: video.title,
+            videoDesc: video.description || "No Description",
+            videoLink: link,
+            videoThumb: video.thumbnails.high.url,
         });
     } catch (err) {
         next(err);
